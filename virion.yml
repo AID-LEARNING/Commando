@@ -3,4 +3,6 @@ antigen: CortexPE\Commando
 api: 4.0.0
 version: 3.0.0
 author: CortexPE
-authors: [ParoxityTeam]
+authors:
+  - ParoxityTeam
+  - AID-LEARNING
