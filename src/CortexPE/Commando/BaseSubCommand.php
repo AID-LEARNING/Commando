@@ -29,12 +29,13 @@ declare(strict_types=1);
 
 namespace CortexPE\Commando;
 
+use pocketmine\command\CommandSender;
 use pocketmine\plugin\PluginBase;
 use function trim;
 
 abstract class BaseSubCommand extends BaseCommand{
 	/** @var BaseCommand */
-	protected $parent;
+	protected BaseCommand $parent;
 
 	public function __construct(PluginBase $plugin, string $name, string $description = "", array $aliases = []){
 		parent::__construct($plugin, $name, $description, $aliases);
@@ -42,7 +43,7 @@ abstract class BaseSubCommand extends BaseCommand{
 		$this->usageMessage = "";
 	}
 
-	public function getParent(): ?BaseCommand {
+	public function getParent(): BaseCommand {
 		return $this->parent;
 	}
 
@@ -73,5 +74,12 @@ abstract class BaseSubCommand extends BaseCommand{
 		}
 
 		return $this->usageMessage;
+	}
+
+	public function testPermissionSilent(CommandSender $sender, ?string $permission = null): bool {
+		if($permission === null && count($this->getPermissions()) === 0) {
+			return true;
+		}
+		return parent::testPermissionSilent($sender, $permission);
 	}
 }
